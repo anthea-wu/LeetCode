@@ -23,7 +23,7 @@ public class TwoSum
         for (var i = 0; i < nums.Length; i++)
         {
             var remain = target - nums[i];
-            var indexOfRemain = Array.IndexOf(nums, remain, i + 1);
+            var indexOfRemain = Array.IndexOf(nums, remain);
             
             if (indexOfRemain >= 0 && indexOfRemain != i)
             {
