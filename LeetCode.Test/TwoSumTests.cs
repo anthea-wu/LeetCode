@@ -6,11 +6,18 @@ namespace LeetCode.Test;
 [TestFixture]
 public class TwoSumTests
 {
+    private TwoSum _twoSum;
+
+    [SetUp]
+    public void Setup()
+    {
+        _twoSum = new TwoSum();
+    }
+
     [TestCaseSource(nameof(TwoSumTestCasesData))]
     public void return_correct_index_another_method(int[] input, int target, int firstIndex, int secondIndex)
     {
-        var twoSum = new TwoSum();
-        var indexes = twoSum.DoAnother(input, target);
+        var indexes = _twoSum.DoAnother(input, target);
 
         Assert.AreEqual(firstIndex, indexes[0]);
         Assert.AreEqual(secondIndex, indexes[1]);
@@ -19,8 +26,7 @@ public class TwoSumTests
     [TestCaseSource(nameof(TwoSumTestCasesData))]
     public void return_correct_index(int[] input, int target, int firstIndex, int secondIndex)
     {
-        var twoSum = new TwoSum();
-        var indexes = twoSum.Do(input, target);
+        var indexes = _twoSum.Do(input, target);
         
         Assert.AreEqual(firstIndex, indexes[0]);
         Assert.AreEqual(secondIndex, indexes[1]);
