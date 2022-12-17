@@ -33,4 +33,23 @@ public class TwoSum
 
         return new int[] { };
     }
+
+    public int[] DoTheOther(int[] nums, int target)
+    {
+        var usedNums = new Dictionary<int, int>();
+        for (var i = 0; i < nums.Length; i++)
+        {
+            var remain = target - nums[i];
+            if (usedNums.ContainsKey(remain))
+            {
+                return new[] { usedNums[remain], i };
+            }
+            else
+            {
+                usedNums[nums[i]] = i;
+            }
+        }
+        
+        throw new ArgumentException();
+    }
 }

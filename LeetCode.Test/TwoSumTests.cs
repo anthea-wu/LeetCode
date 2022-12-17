@@ -15,6 +15,15 @@ public class TwoSumTests
     }
 
     [TestCaseSource(nameof(TwoSumTestCasesData))]
+    public void return_correct_index_when_do_the_other_method(int[] input, int target, int firstIndex, int secondIndex)
+    {
+        var indexes = _twoSum.DoTheOther(input, target);
+
+        Assert.AreEqual(firstIndex, indexes[0]);
+        Assert.AreEqual(secondIndex, indexes[1]);
+    }
+
+    [TestCaseSource(nameof(TwoSumTestCasesData))]
     public void return_correct_index_another_method(int[] input, int target, int firstIndex, int secondIndex)
     {
         var indexes = _twoSum.DoAnother(input, target);
