@@ -16,6 +16,16 @@ public class ValidParentheses
             {"]", "["},
             {"}", "{"},
         };
+
+        var firstKeys = firstParentheses.Keys.ToList();
+        var secondKeys = secondParentheses.Keys.ToList();
+        for (var index = 0; index < firstKeys.Count; index++)
+        {
+            var firstKeyCount = s.Count(c => c.ToString() == firstKeys[index]);
+            var secondKeyCount = s.Count(c => c.ToString() == secondKeys[index]);
+            if (firstKeyCount != secondKeyCount) return false;
+        }
+
         var isValid = false;
         var counter = 0;
         for (var index = 0; index < s.Length; index ++)
@@ -26,7 +36,8 @@ public class ValidParentheses
             var isFirstExisted = firstParentheses.TryGetValue(firstString, out _);
             if (isFirstExisted)
             {
-                var secondString = s.Substring(s.Length - index - 1, 1);
+                var secondIndex = s.Length - index - 1;
+                var secondString = s.Substring(secondIndex, 1);
                 var isSecondExisted = secondParentheses.TryGetValue(secondString, out var expected);
                 if (!isSecondExisted || expected != firstString)
                 {
@@ -51,8 +62,16 @@ public class ValidParentheses
                 }
                 else
                 {
-                    counter++;
-                    isValid = true;
+                    if (secondIndex > index)
+                    {
+                        counter++;
+                        isValid = true;
+                    }
+                    else
+                    {
+                        counter++;
+                        isValid = false;
+                    }
                 }
             }
             else
