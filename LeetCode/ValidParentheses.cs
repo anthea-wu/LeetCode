@@ -87,6 +87,6 @@ public class ValidParentheses
             }
         }
 
-        return true;
+        return used.Count == length / 2;
     }
 }
