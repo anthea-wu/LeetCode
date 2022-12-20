@@ -14,6 +14,22 @@ public class ValidParenthesesTests
     }
 
     [TestCaseSource(nameof(IsNotValidTestCasesData))]
+    public void is_not_valid_when_do_second_time(string s)
+    {
+        var isValid = _validParentheses.DoSecondTime(s);
+        
+        Assert.IsFalse(isValid);
+    }
+
+    [TestCaseSource(nameof(IsValidTestCasesData))]
+    public void is_valid_when_do_second_time(string s)
+    {
+        var isValid = _validParentheses.DoSecondTime(s);
+        
+        Assert.IsTrue(isValid);
+    }
+
+    [TestCaseSource(nameof(IsNotValidTestCasesData))]
     public void is_not_valid(string s)
     {
         var isValid = _validParentheses.DoFirstTime(s);
