@@ -89,4 +89,35 @@ public class ValidParentheses
 
         return used.Count == length / 2;
     }
+
+    public bool DoThirdTime(string s)
+    {
+        if (s.Length % 2 != 0) return false;
+        
+        var openParentheses = new Dictionary<char, char>()
+        {
+            {'(', ')'},
+            {'[', ']'},
+            {'{', '}'},
+        };
+
+        var usedClosedParentheses = new Stack<char>();
+        foreach (var c in s)
+        {
+            if (openParentheses.ContainsKey(c))
+            {
+                usedClosedParentheses.Push(openParentheses[c]);
+            }
+            else if (openParentheses.ContainsValue(c))
+            {
+                if (usedClosedParentheses.Count == 0 || usedClosedParentheses.Pop() != c) return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return usedClosedParentheses.Count == 0;
+    }
 }
