@@ -4,57 +4,47 @@ public class ValidParentheses
 {
     public bool DoFirstTime(string s)
     {
-        if (s.Length % 2 != 0) return false;
+        var length = s.Length;
         
-        var firstParentheses = new Dictionary<string, string>()
+        var isOdd = length % 2 == 0;
+        if (!isOdd) return false;
+        
+        var secondParentheses = new Dictionary<string, string>()
         {
-            {"(", ")"},
-            {"[", "]"},
-            {"{", "}"},
+            {")", "("},
+            {"]", "["},
+            {"}", "{"},
         };
 
         var used = new Dictionary<int, int>();
-        var groupCount = s.Length / 2;
-        for (var index = 0; index < s.Length; index ++)
+        for (var index = 1; index < length; index++)
         {
-            // 2n+1 / 全沒有就 false
-            var firstString = s.Substring(index, 1);
-            var isFirstExisted = firstParentheses.TryGetValue(firstString, out _);
-            if (isFirstExisted)
+            var currentString = s.Substring(index, 1);
+            var isSecondParenthesis = secondParentheses.TryGetValue(currentString, out var firstParenthesis);
+            if (isSecondParenthesis)
             {
-                var isAllSecondExisted = false;
-                // groupCount + 1 要剪掉 index
-                var count = groupCount - index < 0 ? 1 : groupCount - index;
-                for (var i = 0; i < count; i++)
+                for (var previousIndex = index - 1; previousIndex >= 0; previousIndex--)
                 {
-                    var secondIndex = 2 * i + 1 + index;
-                    if (used.TryGetValue(secondIndex, out _)) continue;
-
-                    try
+                    var isPreviousStringUsed = used.TryGetValue(previousIndex, out _);
+                    if (isPreviousStringUsed) continue;
+                    
+                    var previousString = s.Substring(previousIndex, 1);
+                    if (previousString == firstParenthesis)
                     {
-                        var secondString = s.Substring(secondIndex, 1);
-                        var isSecondEqual = firstParentheses[firstString] == secondString;
-                        if (isSecondEqual)
+                        if (used.Count > 0)
                         {
-                            isAllSecondExisted = true;
-                            used[secondIndex] = index;
-                            break;
+                            var isOverload = used.Any(x =>
+                                x.Key < previousIndex && previousIndex < x.Value && x.Value < index);
+                            if (isOverload) break;
                         }
-                    }
-                    catch (ArgumentOutOfRangeException e)
-                    {
+                        
+                        used[previousIndex] = index;
                         break;
                     }
                 }
-
-                if (!isAllSecondExisted) return false;
-            }
-            else
-            {
-                var isUsed = used.TryGetValue(index, out _);
-                if (!isUsed) return false;
             }
         }
-        return true;
+        
+        return used.Count == length / 2;
     }
 }

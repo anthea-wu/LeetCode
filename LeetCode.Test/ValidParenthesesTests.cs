@@ -52,6 +52,7 @@ public class ValidParenthesesTests
             yield return new TestCaseData("{[]}");
             yield return new TestCaseData("()[]{}");
             yield return new TestCaseData("(([]){})");
+            yield return new TestCaseData("[({(())}[()])]");
         }
     }
 }
