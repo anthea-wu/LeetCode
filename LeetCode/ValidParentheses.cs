@@ -4,81 +4,57 @@ public class ValidParentheses
 {
     public bool DoFirstTime(string s)
     {
+        if (s.Length % 2 != 0) return false;
+        
         var firstParentheses = new Dictionary<string, string>()
         {
             {"(", ")"},
             {"[", "]"},
             {"{", "}"},
         };
-        var secondParentheses = new Dictionary<string, string>()
-        {
-            {")", "("},
-            {"]", "["},
-            {"}", "{"},
-        };
 
-        var firstKeys = firstParentheses.Keys.ToList();
-        var secondKeys = secondParentheses.Keys.ToList();
-        for (var index = 0; index < firstKeys.Count; index++)
-        {
-            var firstKeyCount = s.Count(c => c.ToString() == firstKeys[index]);
-            var secondKeyCount = s.Count(c => c.ToString() == secondKeys[index]);
-            if (firstKeyCount != secondKeyCount) return false;
-        }
-
-        var isValid = false;
-        var counter = 0;
+        var used = new Dictionary<int, int>();
+        var groupCount = s.Length / 2;
         for (var index = 0; index < s.Length; index ++)
         {
-            if (counter == s.Length) break;
-            
+            // 2n+1 / 全沒有就 false
             var firstString = s.Substring(index, 1);
             var isFirstExisted = firstParentheses.TryGetValue(firstString, out _);
             if (isFirstExisted)
             {
-                var secondIndex = s.Length - index - 1;
-                var secondString = s.Substring(secondIndex, 1);
-                var isSecondExisted = secondParentheses.TryGetValue(secondString, out var expected);
-                if (!isSecondExisted || expected != firstString)
+                var isAllSecondExisted = false;
+                // groupCount + 1 要剪掉 index
+                var count = groupCount - index < 0 ? 1 : groupCount - index;
+                for (var i = 0; i < count; i++)
                 {
+                    var secondIndex = 2 * i + 1 + index;
+                    if (used.TryGetValue(secondIndex, out _)) continue;
+
                     try
                     {
-                        var closedSecondString = s.Substring(index + 1, 1);
-                        var isClosedSecondExisted = secondParentheses.TryGetValue(closedSecondString, out var expectedClosed);
-                        if (!isClosedSecondExisted || expectedClosed != firstString)
+                        var secondString = s.Substring(secondIndex, 1);
+                        var isSecondEqual = firstParentheses[firstString] == secondString;
+                        if (isSecondEqual)
                         {
-                            isValid = false;
-                        }
-                        else
-                        {
-                            counter++;
-                            isValid = true;
+                            isAllSecondExisted = true;
+                            used[secondIndex] = index;
+                            break;
                         }
                     }
                     catch (ArgumentOutOfRangeException e)
                     {
-                        isValid = false;
+                        break;
                     }
                 }
-                else
-                {
-                    if (secondIndex > index)
-                    {
-                        counter++;
-                        isValid = true;
-                    }
-                    else
-                    {
-                        counter++;
-                        isValid = false;
-                    }
-                }
+
+                if (!isAllSecondExisted) return false;
             }
             else
             {
-                counter++;
+                var isUsed = used.TryGetValue(index, out _);
+                if (!isUsed) return false;
             }
         }
-        return isValid;
+        return true;
     }
 }
