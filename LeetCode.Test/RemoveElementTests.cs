@@ -13,7 +13,19 @@ public class RemoveElementTests
         _removeElement = new RemoveElement();
     }
 
-    [TestCaseSource(nameof(DoFirstTimeTestCasesData))]
+    [TestCaseSource(nameof(DoTestCasesData))]
+    public void do_second_success(int[] nums, int val, int[] expected)
+    {
+        var result = _removeElement.DoSecondTime(nums, val);
+        
+        Assert.AreEqual(expected.Length, result);
+        for (var i = 0; i < expected.Length; i++)
+        {
+            Assert.AreEqual(expected[i], nums[i]);            
+        }
+    }
+    
+    [TestCaseSource(nameof(DoTestCasesData))]
     public void do_first_time_success(int[] nums, int val, int[] expected)
     {
         var result = _removeElement.DoFirstTime(nums, val);
@@ -25,7 +37,7 @@ public class RemoveElementTests
         }
     }
 
-    public static IEnumerable DoFirstTimeTestCasesData
+    public static IEnumerable DoTestCasesData
     {
         get
         {

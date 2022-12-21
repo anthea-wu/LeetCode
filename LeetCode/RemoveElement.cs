@@ -21,4 +21,18 @@ public class RemoveElement
 
         return size;
     }
+
+    public int DoSecondTime(int[] nums, int val)
+    {
+        var slowIndex = 0;
+        for (var fastIndex = 0; fastIndex < nums.Length; fastIndex++)
+        {
+            if (nums[fastIndex] != val)
+            {
+                nums[slowIndex] = nums[fastIndex];
+                slowIndex++;
+            }
+        }
+        return slowIndex;
+    }
 }
