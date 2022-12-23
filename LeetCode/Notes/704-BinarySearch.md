@@ -29,7 +29,7 @@
 
 ## 相關題目
 
-- [35. Search Insert Position](https://leetcode.com/problems/search-insert-position/)
-- [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
-- [69. Sqrt(x)](https://leetcode.com/problems/sqrtx/)
-- [367. Valid Perfect Square](https://leetcode.com/problems/valid-perfect-square/)
+- [x] [35. Search Insert Position](https://leetcode.com/problems/search-insert-position/)
+- [ ] [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+- [ ] [69. Sqrt(x)](https://leetcode.com/problems/sqrtx/)
+- [ ] [367. Valid Perfect Square](https://leetcode.com/problems/valid-perfect-square/)
