@@ -14,6 +14,13 @@ public class ShortestDistanceTests
     }
 
     [TestCaseSource(nameof(ShortestDistanceTestCasesData))]
+    public void do_second_time_success(string[] words, string target, int startIndex, int expectedDistance)
+    {
+        var result = _shortestDistance.DoSecondTime(words, target, startIndex);
+        Assert.AreEqual(expectedDistance, result);
+    }
+
+    [TestCaseSource(nameof(ShortestDistanceTestCasesData))]
     public void do_success(string[] words, string target, int startIndex, int expectedDistance)
     {
         var result = _shortestDistance.Do(words, target, startIndex);
